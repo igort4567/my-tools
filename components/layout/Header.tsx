@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ThemeCustomizer } from "@/components/theme/ThemeCustomizer";
 
 export function Header() {
   return (
@@ -33,6 +34,7 @@ export function Header() {
             >
               инструменты
             </Link>
+            <ThemeCustomizer />
           </nav>
         </div>
       </Container>

@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -34,6 +35,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <head>
+        {/* Применяет сохранённую пользователем тему до первой отрисовки —
+            без этого при перезагрузке страница на мгновение мигала бы
+            дефолтной палитрой. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable} flex min-h-screen flex-col antialiased`}
       >
