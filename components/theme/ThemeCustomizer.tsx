@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ColorField } from "@/components/theme/ColorField";
 import {
   DEFAULT_BACKGROUND,
   DEFAULT_LINE,
@@ -97,31 +98,13 @@ export function ThemeCustomizer() {
             палитра
           </p>
 
-          <div className="flex items-center justify-between gap-3 py-1.5">
-            <label htmlFor="theme-bg" className="text-sm text-ink">
-              Фон
-            </label>
-            <input
-              id="theme-bg"
-              type="color"
-              value={background}
-              onChange={(event) => handleBackgroundChange(event.target.value)}
-              className="h-8 w-11 cursor-pointer rounded border border-line bg-transparent p-0.5"
-            />
-          </div>
+          <ColorField
+            label="Фон"
+            value={background}
+            onChange={handleBackgroundChange}
+          />
 
-          <div className="flex items-center justify-between gap-3 py-1.5">
-            <label htmlFor="theme-line" className="text-sm text-ink">
-              Линии
-            </label>
-            <input
-              id="theme-line"
-              type="color"
-              value={line}
-              onChange={(event) => handleLineChange(event.target.value)}
-              className="h-8 w-11 cursor-pointer rounded border border-line bg-transparent p-0.5"
-            />
-          </div>
+          <ColorField label="Линии" value={line} onChange={handleLineChange} />
 
           <button
             type="button"
