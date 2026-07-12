@@ -89,7 +89,10 @@ export function ThemeCustomizer() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-20 mt-2 w-60 rounded-lg border border-line bg-paper p-4 shadow-lg">
+        <div
+          className="absolute right-0 top-full z-20 mt-2 w-60 rounded-lg border border-line bg-paper p-4 shadow-lg"
+          onMouseDown={(event) => event.stopPropagation()}
+        >
           <p className="mb-3 font-mono text-xs uppercase tracking-wide text-ink-soft">
             палитра
           </p>
