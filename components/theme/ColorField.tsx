@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId } from "react";
 
 export function ColorField({
   label,
@@ -11,7 +11,6 @@ export function ColorField({
   value: string;
   onChange: (hex: string) => void;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
 
   return (
@@ -20,29 +19,27 @@ export function ColorField({
         {label}
       </label>
 
-      <div className="relative h-8 w-11">
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          className="h-8 w-11 rounded border border-line"
-          style={{ backgroundColor: value }}
-          aria-label={`Выбрать цвет: ${label}, сейчас ${value}`}
-        />
-        {/* Настоящий color-picker: визуально скрыт, но остаётся в DOM
-            и открывается программно по клику на видимый прямоугольник выше.
-            Так надёжнее, чем полагаться на клик по самому нативному input —
-            в некоторых браузерах он может не срабатывать из-за стилизации. */}
-        <input
-          ref={inputRef}
-          id={inputId}
-          type="color"
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-          tabIndex={-1}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full opacity-0"
-        />
-      </div>
+      {/* Сам нативный color-picker — видимый прямоугольник, по которому кликают
+          напрямую. Раньше он был скрыт (opacity-0 + aria-hidden) и открывался
+          программным .click() по отдельной кнопке поверх — из-за aria-hidden на
+          фокусируемом элементе браузер (Chrome/Edge) принудительно снимал с него
+          фокус в момент открытия палитры, из-за чего она мгновенно закрывалась.
+          Прямой клик по настоящему input убирает этот конфликт. */}
+      <input
+        id={inputId}
+        type="color"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        onMouseDown={(event) => event.stopPropagation()}
+        aria-label={`Выбрать цвет: ${label}, сейчас ${value}`}
+        className="h-8 w-11 cursor-pointer appearance-none rounded border border-line bg-transparent p-0
+          [&::-webkit-color-swatch]:rounded-[3px]
+          [&::-webkit-color-swatch]:border-none
+          [&::-webkit-color-swatch-wrapper]:rounded-[3px]
+          [&::-webkit-color-swatch-wrapper]:p-0
+          [&::-moz-color-swatch]:rounded-[3px]
+          [&::-moz-color-swatch]:border-none"
+      />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { ThemeCustomizer } from "@/components/theme/ThemeCustomizer";
 
 export function Header() {
   return (
-    <header className="border-b border-line bg-paper/90 backdrop-blur">
+    <header className="relative z-50 border-b border-line bg-paper/90 backdrop-blur">
       <Container>
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
