@@ -50,6 +50,13 @@ export const tools: Tool[] = [
     category: "Калькуляторы",
   },
   {
+    slug: "price-calculator",
+    code: "T-13",
+    title: "Калькулятор цены",
+    description: "Считает итоговую цену после последовательных скидок и наценок.",
+    category: "Калькуляторы",
+  },
+  {
     slug: "length-converter",
     code: "T-04",
     title: "Конвертер длины",

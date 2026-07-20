@@ -1,24 +1,28 @@
 export function CalcInput({
   id,
   label,
+  ariaLabel,
   value,
   onChange,
   suffix,
 }: {
   id: string;
-  label: string;
+  label?: string;
+  ariaLabel?: string;
   value: string;
   onChange: (value: string) => void;
   suffix?: string;
 }) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block font-mono text-xs text-ink-soft"
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={id}
+          className="mb-1.5 block font-mono text-xs text-ink-soft"
+        >
+          {label}
+        </label>
+      )}
       <div className="relative">
         <input
           id={id}
@@ -26,6 +30,7 @@ export function CalcInput({
           inputMode="decimal"
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          aria-label={ariaLabel}
           className="w-full rounded-md border border-line bg-paper px-3 py-2 font-mono text-ink outline-none focus:border-primary"
         />
         {suffix && (
