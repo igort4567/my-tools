@@ -1,8 +1,14 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { ToolCard } from "@/components/tools/ToolCard";
+import { CategoryCard } from "@/components/tools/CategoryCard";
+import { CalculatorIcon, ConverterIcon } from "@/components/tools/icons";
 import { PercentCalculator } from "@/components/tools/PercentCalculator";
-import { tools } from "@/lib/tools-config";
+import { categories, tools } from "@/lib/tools-config";
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  kalkulyatory: <CalculatorIcon />,
+  konvertory: <ConverterIcon />,
+};
 
 const specs: Array<[string, string]> = [
   ["Стоимость", "Бесплатно"],
@@ -51,27 +57,32 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CATALOG PREVIEW */}
+      {/* КАТЕГОРИИ */}
       <section className="border-t-2 border-line-strong">
         <Container className="py-16">
           <div className="mb-8 flex items-end justify-between">
             <h2 className="font-display text-2xl font-semibold text-ink">
-              Каталог инструментов
+              Категории
             </h2>
             <span className="font-mono text-xs text-ink-soft">
-              {tools.length.toString().padStart(2, "0")} доступно
+              {categories.length.toString().padStart(2, "0")} доступно
             </span>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {tools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.slug}
+                category={category}
+                count={tools.filter((tool) => tool.category === category.title).length}
+                icon={categoryIcons[category.slug]}
+              />
             ))}
 
-            <div className="flex flex-col items-start justify-center rounded-lg border border-dashed border-line p-5 text-sm text-ink-soft">
-              <span className="font-mono text-xs text-ink-soft">T-04…</span>
+            <div className="flex flex-col items-start justify-center rounded-lg border border-dashed border-line p-6 text-sm text-ink-soft">
+              <span className="font-mono text-xs text-ink-soft">···</span>
               <p className="mt-2">
-                Новые инструменты добавляются сюда по мере готовности.
+                Новые категории и инструменты добавляются по мере готовности.
               </p>
             </div>
           </div>

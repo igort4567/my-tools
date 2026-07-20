@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { ToolCard } from "@/components/tools/ToolCard";
-import { tools } from "@/lib/tools-config";
+import { categories, tools } from "@/lib/tools-config";
 
 export const metadata: Metadata = {
   title: "Каталог инструментов — Верстак",
@@ -22,10 +22,37 @@ export default function ToolsPage() {
         Верстаке.
       </p>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {tools.map((tool) => (
-          <ToolCard key={tool.slug} tool={tool} />
-        ))}
+      <div className="mt-12 space-y-14">
+        {categories.map((category) => {
+          const categoryTools = tools.filter(
+            (tool) => tool.category === category.title,
+          );
+          if (categoryTools.length === 0) return null;
+
+          return (
+            <section key={category.slug} id={category.slug} className="scroll-mt-24">
+              <div className="mb-6 flex items-end justify-between gap-4 border-b-2 border-line-strong pb-4">
+                <div>
+                  <h2 className="font-display text-2xl font-semibold text-ink">
+                    {category.title}
+                  </h2>
+                  <p className="mt-1 text-sm text-ink-soft">
+                    {category.description}
+                  </p>
+                </div>
+                <span className="shrink-0 font-mono text-xs text-ink-soft">
+                  {categoryTools.length.toString().padStart(2, "0")} доступно
+                </span>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {categoryTools.map((tool) => (
+                  <ToolCard key={tool.slug} tool={tool} />
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </Container>
   );
